@@ -6,8 +6,8 @@ app.use(express.json());
 app.use(cors());
 
 const users = [{
-  // username: 'jao',
-  // avatar: 'https://bit.ly/goku-profile',
+  username: 'jao',
+  avatar: 'https://bit.ly/goku-profile',
 }];
 const tweets = [];
 
@@ -23,12 +23,14 @@ app.post('/tweets', (req, res) => {
 
   const tweet = { ...req.body, avatar };
 
-  tweets.push(tweet);
+  tweets.unshift(tweet);
   res.send('OK');
 });
 
 app.get('/tweets', (req, res) => {
-  res.send(tweets);
+  const lastTenTweets = tweets.filter((tweet, index) => index < 10);
+
+  res.send(lastTenTweets);
 });
 
 app.listen(5000);
